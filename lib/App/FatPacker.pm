@@ -2,6 +2,7 @@ package App::FatPacker;
 
 use strict;
 use warnings FATAL => 'all';
+use 5.008001;
 use Getopt::Long;
 use Cwd qw(cwd);
 use File::Find qw(find);
@@ -11,6 +12,10 @@ use File::Spec::Functions qw(
 use File::Copy qw(copy);
 use File::Path qw(make_path remove_tree);
 use B qw(perlstring);
+
+our $VERSION = '0.009001'; # 0.9.1
+
+$VERSION = eval $VERSION;
 
 my $option_parser = Getopt::Long::Parser->new(
   config => [ qw(require_order pass_through bundling no_auto_abbrev) ]
@@ -31,10 +36,6 @@ sub stripspace {
   $text =~ /^(\s+)/ && $text =~ s/^$1//mg;
   $text;
 }
-
-our $VERSION = '0.009001'; # 0.9.1
-
-$VERSION = eval $VERSION;
 
 sub import {
   $_[1] eq '-run_script'
@@ -102,7 +103,7 @@ sub packlists_containing {
     $pack_rev{$_} = $File::Find::name for lines_of $File::Find::name;
   }, @search);
   chdir($cwd) or die "Couldn't chdir back to ${cwd} after find: $!";
-  my %found; @found{map $pack_rev{$INC{$_}}, @targets} = ();
+  my %found; @found{map +($pack_rev{$INC{$_}}||()), @targets} = ();
   sort keys %found;
 }
 
@@ -183,4 +184,47 @@ sub script_command_file {
   } sort keys %files;
   print join "\n", $start, @segments, $end;
 }
+
+=head1 NAME
+
+App::FatPacker - pack your dependencies onto your script file
+
+=head1 SYNOPSIS
+
+  $ fatpack trace myscript.pl
+  $ fatpack packlists-for `cat factpacker.trace` >packlists
+  $ fatpack tree fatlib `cat packlists`
+  $ (fatpack file; cat myscript.pl) >myscript.packed.pl
+
+See the documentation for the L<fatpack> script itself for more information.
+
+The programmatic API for this code is not yet fully decided, hence the 0.9.1
+release version. Expect that to be cleaned up for 1.0.
+
+=head1 SUPPORT
+
+Your current best avenue is to come annoy annoy mst on #toolchain on
+irc.perl.org. There should be a non-IRC means of support by 1.0.
+
+=head1 AUTHOR
+
+Matt S. Trout (mst) <mst@shadowcat.co.uk>
+
+=head2 CONTRIBUTORS
+
+None as yet, though I probably owe lots of people thanks for ideas. Yet
+another doc nit to fix.
+
+=head1 COPYRIGHT
+
+Copyright (c) 2010 the App::FatPacker L</AUTHOR> and L</CONTRIBUTORS>
+as listed above.
+
+=head1 LICENSE
+
+This library is free software and may be distributed under the same terms
+as perl itself.
+
+=cut
+
 1;
