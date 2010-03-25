@@ -47,12 +47,16 @@ sub new { bless({}, $_[0]) }
 sub run_script {
   my ($self, $args) = @_;
   my @args = $args ? @$args : @ARGV;
-  (my $cmd = shift @args) =~ s/-/_/g;
+  (my $cmd = shift @args || 'help') =~ s/-/_/g;
   if (my $meth = $self->can("script_command_${cmd}")) {
     $self->$meth(\@args);
   } else {
     die "No such command ${cmd}";
   }
+}
+
+sub script_command_help {
+  print "Try `perldoc fatpack` for how to use me\n";
 }
 
 sub script_command_trace {
