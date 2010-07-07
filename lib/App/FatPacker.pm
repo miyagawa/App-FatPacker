@@ -196,8 +196,8 @@ App::FatPacker - pack your dependencies onto your script file
 =head1 SYNOPSIS
 
   $ fatpack trace myscript.pl
-  $ fatpack packlists-for `cat factpacker.trace` >packlists
-  $ fatpack tree fatlib `cat packlists`
+  $ fatpack packlists-for `cat fatpacker.trace` >packlists
+  $ fatpack tree `cat packlists`
   $ (fatpack file; cat myscript.pl) >myscript.packed.pl
 
 See the documentation for the L<fatpack> script itself for more information.
