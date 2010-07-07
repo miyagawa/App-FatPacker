@@ -1,2 +1,6 @@
+0.02 2010-07-07
+  - fixed typo and doc bug on command usage.(miyagawa)
+  - added `help' command for slightly better user experience(miyagawa)
+
 2010-03-25
   - Initial release
