@@ -1,3 +1,6 @@
+0.03 2010-07-22
+  - fixed dependency for File::Path(remove_tree/make_path was first appeared at 2.07)
+
 0.02 2010-07-07
   - fixed typo and doc bug on command usage.(miyagawa)
   - added `help' command for slightly better user experience(miyagawa)
