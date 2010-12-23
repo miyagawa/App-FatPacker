@@ -182,7 +182,7 @@ sub script_command_file {
   my @segments = map {
     (my $stub = $_) =~ s/\.pm$//;
     my $name = uc join '_', split '/', $stub;
-    my $data = $files{$_}; $data =~ s/^/  /mg;
+    my $data = $files{$_}; $data =~ s/^/  /mg; $data =~ s/(?<!\n)\z/\n/;
     '$fatpacked{'.perlstring($_).qq!} = <<'${name}';\n!
     .qq!${data}${name}\n!;
   } sort keys %files;
