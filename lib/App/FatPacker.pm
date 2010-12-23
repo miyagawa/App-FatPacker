@@ -171,7 +171,8 @@ sub script_command_file {
 
     unshift @INC, sub {
       if (my $fat = $fatpacked{$_[1]}) {
-        open my $fh, '<', \$fat;
+        open my $fh, '<', \$fat
+          or die "FatPacker error loading $_[1] (could be a perl installation issue?)";
         return $fh;
       }
       return
