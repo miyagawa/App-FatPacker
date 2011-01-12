@@ -1,3 +1,6 @@
+0.9.5 2011-01-12
+  - Avoid using done_testing so this works on older systems
+
 0.9.4 2011-01-12
   - Die if open fails in @INC handler, reduces confusing errors (DGL)
   - RT #63466: Add ending newline if input lacks one (GUGOD)
