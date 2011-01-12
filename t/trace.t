@@ -1,5 +1,7 @@
 #!perl
-use Test::More;
+use strict;
+use warnings FATAL => 'all';
+use Test::More qw(no_plan);
 
 test_trace("t/mod/a.pm" => ("t/mod/b.pm", "t/mod/c.pm"));
 test_trace("t/mod/b.pm" => ("t/mod/c.pm"));
@@ -7,8 +9,6 @@ test_trace("t/mod/c.pm" => ());
 
 # Attempts to conditionally load a module that isn't present
 test_trace("t/mod/cond.pm" => ());
-
-done_testing;
 
 sub test_trace {
   my($file, @loaded) = @_;
