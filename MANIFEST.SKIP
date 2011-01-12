@@ -1,1 +1,1 @@
-^(?!bin/\w+|examples/[^\.]+|lib/[\/\w]+\.p(m|od)|inc/|t/\w+\.t|Makefile.PL$|README$|MANIFEST$|Changes$|META.yml$)
+^(?!bin/\w+|examples/[^\.]+|lib/[\/\w]+\.p(m|od)|inc/|t/\w+\.t|t/.+\.pm$|Makefile.PL$|README$|MANIFEST$|Changes$|META.yml$)
