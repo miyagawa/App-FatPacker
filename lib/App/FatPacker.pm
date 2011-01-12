@@ -13,7 +13,7 @@ use File::Copy qw(copy);
 use File::Path qw(make_path remove_tree);
 use B qw(perlstring);
 
-our $VERSION = '0.009003'; # 0.9.3
+our $VERSION = '0.009004'; # 0.9.4
 
 $VERSION = eval $VERSION;
 
