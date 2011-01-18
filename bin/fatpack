@@ -10,7 +10,8 @@ fatpack - Command line frontend for App::FatPacker
 
 =head2 trace
 
-  $ fatpack trace [--to=trace-file|--to-stderr] myscript.pl
+  $ fatpack trace [--to=trace-file|--to-stderr] [--use=MODULE]
+      myscript.pl
 
 Compiles myscript.pl (as in "perl -c") and writes out a trace file containing
 every module require()d during the compilation.
@@ -21,6 +22,9 @@ overrides this.
 If you pass --to-stderr fatpack writes the trace to STDERR instead.
 
 You cannot pass both --to and --to-stderr.
+
+If the --use option specifies a module (or modules, if used multiple
+times) those modules will be additionally included in the trace output.
 
 =head2 packlists-for
 

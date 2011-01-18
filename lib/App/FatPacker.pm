@@ -65,23 +65,27 @@ sub script_command_trace {
   $args = call_parser $args => [
     'to=s' => \my $file,
     'to-stderr' => \my $to_stderr,
+    'use=s' => \my @additional_use
   ];
 
   die "Can't use to and to-stderr on same call" if $file && $to_stderr;
 
-  (my $use_file = $file) ||= 'fatpacker.trace';
-  if (!$to_stderr and -e $use_file) {
-    unlink $use_file or die "Couldn't remove old trace file: $!";
+  $file ||= 'fatpacker.trace';
+  if (!$to_stderr and -e $file) {
+    unlink $file or die "Couldn't remove old trace file: $!";
   }
   my $arg = do {
-    if ($file) {
-      "=>>${file}"
-    } elsif ($to_stderr) {
+    if ($to_stderr) {
       "=>&STDERR"
-    } else {
-      ""
+    } elsif ($file) {
+      "=>>${file}"
     }
   };
+
+  if(@additional_use) {
+    $arg .= "," . join ",", @additional_use;
+  }
+
   {
     local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace'.$arg;
     system $^X, @$args;
@@ -203,7 +207,7 @@ App::FatPacker - pack your dependencies onto your script file
 
 See the documentation for the L<fatpack> script itself for more information.
 
-The programmatic API for this code is not yet fully decided, hence the 0.9.1
+The programmatic API for this code is not yet fully decided, hence the 0.9
 release version. Expect that to be cleaned up for 1.0.
 
 =head1 SUPPORT

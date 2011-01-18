@@ -8,11 +8,17 @@ my $trace_file;
 my %initial_inc;
 
 sub import {
-  $trace_file = $_[1] || '>>fatpacker.trace';
+  my(undef, $file, @extras) = @_;
+
+  $trace_file = $file || '>>fatpacker.trace';
   # For filtering out our own deps later.
   # (Not strictly required as these are core only and won't have packlists, but 
   # looks neater.)
   %initial_inc = %INC;
+
+  # Use any extra modules specified
+  eval "use $_" for @extras;
+
   B::minus_c;
 }
 
