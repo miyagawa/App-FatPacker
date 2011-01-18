@@ -1,3 +1,7 @@
+0.9.6 2011-01-18
+  - Use File::Path's "legacy" mkpath and rmtree functions. No longer needs
+    File::Path >= 2.07.
+
 0.9.5 2011-01-12
   - Avoid using done_testing so this works on older systems
 

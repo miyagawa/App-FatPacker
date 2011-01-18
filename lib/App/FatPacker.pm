@@ -10,10 +10,10 @@ use File::Spec::Functions qw(
   catdir splitpath splitdir catpath rel2abs abs2rel
 );
 use File::Copy qw(copy);
-use File::Path qw(make_path remove_tree);
+use File::Path qw(mkpath rmtree);
 use B qw(perlstring);
 
-our $VERSION = '0.009005'; # 0.9.5
+our $VERSION = '0.009006'; # 0.9.6
 
 $VERSION = eval $VERSION;
 
@@ -119,8 +119,8 @@ sub script_command_tree {
 
 sub packlists_to_tree {
   my ($self, $where, $packlists) = @_;
-  remove_tree $where;
-  make_path $where;
+  rmtree $where;
+  mkpath $where;
   foreach my $pl (@$packlists) {
     my ($vol, $dirs, $file) = splitpath $pl;
     my @dir_parts = splitdir $dirs;
@@ -139,7 +139,7 @@ sub packlists_to_tree {
       next unless substr($source,0,length $pack_base) eq $pack_base;
       my $target = rel2abs( abs2rel($source, $pack_base), $where );
       my $target_dir = catpath((splitpath $target)[0,1]);
-      make_path $target_dir;
+      mkpath $target_dir;
       copy $source => $target;
     }
   }
