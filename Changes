@@ -1,3 +1,5 @@
+  - Add repsoitory metadata to META.YML
+
 0.9.6 2011-01-18
   - Use File::Path's "legacy" mkpath and rmtree functions. No longer needs
     File::Path >= 2.07.
