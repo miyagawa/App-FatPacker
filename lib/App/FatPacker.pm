@@ -4,6 +4,7 @@ use strict;
 use warnings FATAL => 'all';
 use 5.008001;
 use Getopt::Long;
+use Capture::Tiny ();
 use Cwd qw(cwd);
 use File::Find qw(find);
 use File::Spec::Functions qw(
@@ -101,15 +102,36 @@ sub trace {
   my $use = defined $opts{'use'} ? $opts{'use'} : [];
   my $args = defined $opts{'args'} ? $opts{'args'} : [];
   my $output = $opts{'output'};
+  my $capture;
+
+  # if the user doesn't provide output, they want to actually
+  # capture the output and receive it back
+  if (!$output) {
+    # throw to STDOUT to differ from STDERR
+    $output .= '>&STDOUT';
+
+    # raise capture flag
+    $capture++;
+  }
 
   if(@$use) {
     $output .= "," . join ",", @$use;
   }
 
-  {
-    local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace='.$output;
-    system $^X, @$args;
-  }
+  my $trace_sub = sub {
+     local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace='.$output;
+     system $^X, @$args;
+  };
+
+  if ($capture) {
+    # capture both STDOUT and STDERR so we could throw away STDERR
+    # STDOUT will contain the trace
+    # STDERR will contain the "syntax OK" statement
+    my ($stdout, $stderr) = Capture::Tiny::capture {$trace_sub->()};
+    return $stdout;
+  } else {
+    $trace_sub->();
+   }
 }
 
 sub script_command_packlists_for {
