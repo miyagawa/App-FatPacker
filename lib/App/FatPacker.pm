@@ -17,14 +17,14 @@ our $VERSION = '0.009006'; # 0.9.6
 
 $VERSION = eval $VERSION;
 
-my $option_parser = Getopt::Long::Parser->new(
-  config => [ qw(require_order pass_through bundling no_auto_abbrev) ]
-);
-
 sub call_parser {
-  local *ARGV = [ @{$_[0]} ];
-  $option_parser->getoptions(@{$_[1]});
-  [ @ARGV ];
+  my $self = shift;
+  my ( $args, $options ) = @_;
+
+  local *ARGV = [ @{$args} ];
+  $self->{'option_parser'}->getoptions( @{$options} );
+
+  return [ @ARGV ];
 }
 
 sub lines_of {
@@ -38,16 +38,23 @@ sub stripspace {
 }
 
 sub import {
-  $_[1] eq '-run_script'
+  $_[1] && $_[1] eq '-run_script'
     and return shift->new->run_script;
 }
 
-sub new { bless({}, $_[0]) }
+sub new {
+  bless {
+    option_parser => Getopt::Long::Parser->new(
+      config => [ qw(require_order pass_through bundling no_auto_abbrev) ]
+    ),
+  }, $_[0];
+}
 
 sub run_script {
   my ($self, $args) = @_;
   my @args = $args ? @$args : @ARGV;
   (my $cmd = shift @args || 'help') =~ s/-/_/g;
+
   if (my $meth = $self->can("script_command_${cmd}")) {
     $self->$meth(\@args);
   } else {
@@ -61,12 +68,12 @@ sub script_command_help {
 
 sub script_command_trace {
   my ($self, $args) = @_;
-  
-  $args = call_parser $args => [
+
+  $args = $self->call_parser( $args => [
     'to=s' => \my $file,
     'to-stderr' => \my $to_stderr,
     'use=s' => \my @additional_use
-  ];
+  ] );
 
   die "Can't use to and to-stderr on same call" if $file && $to_stderr;
 
@@ -237,3 +244,4 @@ as perl itself.
 =cut
 
 1;
+
