@@ -6,6 +6,7 @@ use File::Basename;
 use File::Copy;
 use File::Path;
 use File::Temp;
+use Cwd;
 
 BEGIN { use_ok "App::FatPacker", "" }
 
@@ -16,6 +17,7 @@ for(<t/mod/*.pm>) {
   copy $_, "$tempdir/lib/$_" or die "copy failed: $!";
 }
 
+my $cwd = getcwd;
 chdir $tempdir;
 
 my $fp = App::FatPacker->new;
@@ -34,3 +36,6 @@ require $temp_fh;
   no warnings 'once';
   ok $t::mod::a::foo eq 'bar';
 }
+
+# moving away from the dir so it could be deleted
+chdir $cwd;
