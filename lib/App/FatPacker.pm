@@ -98,8 +98,8 @@ sub script_command_trace {
 
 sub trace {
   my ($self, %opts) = @_;
-  my $use = $opts{'use'};
-  my $args = $opts{'args'};
+  my $use = defined $opts{'use'} ? $opts{'use'} : [];
+  my $args = defined $opts{'args'} ? $opts{'args'} : [];
   my $output = $opts{'output'};
 
   if(@$use) {
