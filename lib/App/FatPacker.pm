@@ -89,20 +89,22 @@ sub script_command_trace {
     }
   };
 
-  if(@additional_use) {
-    $arg .= "," . join ",", @additional_use;
-  }
-
   $self->trace(
-    output => $arg,
+    use    => \@additional_use,
     args   => $args,
+    output => $arg,
   );
 }
 
 sub trace {
   my ($self, %opts) = @_;
-  my $output = $opts{'output'};
+  my $use = $opts{'use'};
   my $args = $opts{'args'};
+  my $output = $opts{'output'};
+
+  if(@$use) {
+    $output .= "," . join ",", @$use;
+  }
 
   {
     local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace'.$output;
