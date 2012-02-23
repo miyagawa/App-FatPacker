@@ -5,12 +5,13 @@ use Test::More qw(no_plan);
 use File::Basename;
 use File::Copy;
 use File::Path;
-use File::Temp;
+use File::Temp qw/tempdir/;
 use Cwd;
 
 BEGIN { use_ok "App::FatPacker", "" }
 
-my $tempdir = File::Temp->newdir;
+my $keep = $ENV{'FATPACKER_KEEP_TESTDIR'};
+my $tempdir = tempdir($keep ? (CLEANUP => 0) : (CLEANUP => 1));
 mkpath([<$tempdir/{lib,fatlib}/t/mod>]);
 
 for(<t/mod/*.pm>) {
@@ -39,3 +40,4 @@ require $temp_fh;
 
 # moving away from the dir so it could be deleted
 chdir $cwd;
+
