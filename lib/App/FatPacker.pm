@@ -83,9 +83,9 @@ sub script_command_trace {
   }
   my $arg = do {
     if ($to_stderr) {
-      "=>&STDERR"
+      "=&STDERR"
     } elsif ($file) {
-      "=>>${file}"
+      ">>${file}"
     }
   };
 
@@ -107,7 +107,7 @@ sub trace {
   }
 
   {
-    local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace'.$output;
+    local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace='.$output;
     system $^X, @$args;
   }
 }
