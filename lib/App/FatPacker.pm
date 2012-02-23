@@ -91,8 +91,8 @@ sub script_command_trace {
   };
 
   $self->trace(
-    use    => \@additional_use,
-    args   => $args,
+    use => \@additional_use,
+    args => $args,
     output => $arg,
   );
 }
