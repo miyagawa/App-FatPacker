@@ -4,7 +4,6 @@ use strict;
 use warnings FATAL => 'all';
 use 5.008001;
 use Getopt::Long;
-use Capture::Tiny ();
 use Cwd qw(cwd);
 use File::Find qw(find);
 use File::Spec::Functions qw(
@@ -20,10 +19,10 @@ $VERSION = eval $VERSION;
 
 sub call_parser {
   my $self = shift;
-  my ( $args, $options ) = @_;
+  my ($args, $options) = @_;
 
   local *ARGV = [ @{$args} ];
-  $self->{'option_parser'}->getoptions( @{$options} );
+  $self->{option_parser}->getoptions(@$options);
 
   return [ @ARGV ];
 }
@@ -70,15 +69,16 @@ sub script_command_help {
 sub script_command_trace {
   my ($self, $args) = @_;
 
-  $args = $self->call_parser( $args => [
+  $args = $self->call_parser($args => [
     'to=s' => \my $file,
     'to-stderr' => \my $to_stderr,
     'use=s' => \my @additional_use
-  ] );
+  ]);
 
   die "Can't use to and to-stderr on same call" if $file && $to_stderr;
 
   $file ||= 'fatpacker.trace';
+
   if (!$to_stderr and -e $file) {
     unlink $file or die "Couldn't remove old trace file: $!";
   }
@@ -99,39 +99,28 @@ sub script_command_trace {
 
 sub trace {
   my ($self, %opts) = @_;
-  my $use = defined $opts{'use'} ? $opts{'use'} : [];
-  my $args = defined $opts{'args'} ? $opts{'args'} : [];
-  my $output = $opts{'output'};
+
   my $capture;
 
-  # if the user doesn't provide output, they want to actually
-  # capture the output and receive it back
-  if (!$output) {
-    # throw to STDOUT to differ from STDERR
-    $output .= '>&STDOUT';
-
-    # raise capture flag
-    $capture++;
-  }
-
-  if(@$use) {
-    $output .= "," . join ",", @$use;
-  }
-
-  my $trace_sub = sub {
-     local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace='.$output;
-     system $^X, @$args;
+  my $output = $opts{output} || do {
+    $capture++; '>&STDOUT'
   };
 
-  if ($capture) {
-    # capture both STDOUT and STDERR so we could throw away STDERR
-    # STDOUT will contain the trace
-    # STDERR will contain the "syntax OK" statement
-    my ($stdout, $stderr) = Capture::Tiny::capture {$trace_sub->()};
-    return $stdout;
+  my $trace_opts = join ',', $output||'>&STDOUT', @{$opts{use}||[]};
+
+  local $ENV{PERL5OPT} = '-MApp::FatPacker::Trace='.$trace_opts;
+
+  my @args = @{$opts{args}||[]};
+
+  if ($output) {
+    # user specified output target, JFDI
+    system $^X, @args;
+    return;
   } else {
-    $trace_sub->();
-   }
+    # no output target specified, slurp
+    open my $out_fh, '-|', $^X, @args;
+    return do { local $/; <$out_fh> };
+  }
 }
 
 sub script_command_packlists_for {
