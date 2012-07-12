@@ -1,3 +1,4 @@
+0.9.7 2012-07-12
   - Allow capturing of trace information into return value
   - Add repsoitory metadata to META.YML
 
