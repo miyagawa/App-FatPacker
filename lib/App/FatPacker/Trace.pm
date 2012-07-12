@@ -8,7 +8,7 @@ my $trace_file;
 my %initial_inc;
 
 sub import {
-  my(undef, $file, @extras) = @_;
+  my (undef, $file, @extras) = @_;
 
   $trace_file = $file || '>>fatpacker.trace';
   # For filtering out our own deps later.
@@ -28,7 +28,7 @@ CHECK {
   open my $trace, $trace_file
       or die "Couldn't open $trace_file to trace to: $!";
 
-  for my $inc(keys %INC) {
+  for my $inc (keys %INC) {
     next if exists $initial_inc{$inc};
     print $trace "$inc\n";
   }
