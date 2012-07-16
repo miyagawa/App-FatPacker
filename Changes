@@ -1,3 +1,4 @@
+0.9.8 2012-07-16
   - RT #78391: Avoid using $_ when requiring modules
 
 0.9.7 2012-07-12
