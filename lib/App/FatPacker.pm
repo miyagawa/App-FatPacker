@@ -84,7 +84,7 @@ sub script_command_trace {
   }
   my $arg = do {
     if ($to_stderr) {
-      "=&STDERR"
+      ">&STDERR"
     } elsif ($file) {
       ">>${file}"
     }

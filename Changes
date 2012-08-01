@@ -1,3 +1,5 @@
+  - RT #78724: fix trace --to-stderr (ether)
+
 0.9.8 2012-07-16
   - RT #78391: Avoid using $_ when requiring modules
 
