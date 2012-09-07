@@ -196,6 +196,7 @@ sub script_command_file {
       $files{File::Spec::Unix->abs2rel($File::Find::name,$dir)} = do {
         local (@ARGV, $/) = ($File::Find::name); <>
       };
+      close ARGV;
     }, $dir);
   }
   my $start = stripspace <<'  END_START';
