@@ -1,3 +1,5 @@
+  - RT #79489: %fatpacked keys need to be unix paths
+
 0.009009 2012-08-03
   - RT #78724: fix trace --to-stderr (ether)
 

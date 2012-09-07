@@ -9,6 +9,7 @@ use File::Find qw(find);
 use File::Spec::Functions qw(
   catdir splitpath splitdir catpath rel2abs abs2rel
 );
+use File::Spec::Unix;
 use File::Copy qw(copy);
 use File::Path qw(mkpath rmtree);
 use B qw(perlstring);
@@ -192,7 +193,7 @@ sub script_command_file {
     find(sub {
       return unless -f $_;
       !/\.pm$/ and warn "File ${File::Find::name} isn't a .pm file - can't pack this and if you hoped we were going to things may not be what you expected later\n" and return;
-      $files{abs2rel($File::Find::name,$dir)} = do {
+      $files{File::Spec::Unix->abs2rel($File::Find::name,$dir)} = do {
         local (@ARGV, $/) = ($File::Find::name); <>
       };
     }, $dir);
@@ -267,6 +268,8 @@ t0m - Tomas Doran (cpan:BOBTFISH) <bobtfish@bobtfish.net>
 sawyer - Sawyer X (cpan:XSAWYERX) <xsawyerx@cpan.org>
 
 ether - Karen Etheridge (cpan:ETHER) <ether@cpan.org>
+
+Mithaldu - Christian Walde (cpan:MITHALDU) <walde.christian@googlemail.com>
 
 Many more people are probably owed thanks for ideas. Yet
 another doc nit to fix.
