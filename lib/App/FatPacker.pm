@@ -254,7 +254,21 @@ Matt S. Trout (mst) <mst@shadowcat.co.uk>
 
 =head2 CONTRIBUTORS
 
-None as yet, though I probably owe lots of people thanks for ideas. Yet
+miyagawa - Tatsuhiko Miyagawa (cpan:MIYAGAWA) <miyagawa@bulknews.net>
+
+tokuhirom - MATSUNO★Tokuhiro (cpan:TOKUHIROM) <tokuhirom@gmail.com>
+
+dg - David Leadbeater (cpan:DGL) <dgl@dgl.cx>
+
+gugod - 劉康民 (cpan:GUGOD) <gugod@cpan.org>
+
+t0m - Tomas Doran (cpan:BOBTFISH) <bobtfish@bobtfish.net>
+
+sawyer - Sawyer X (cpan:XSAWYERX) <xsawyerx@cpan.org>
+
+ether - Karen Etheridge (cpan:ETHER) <ether@cpan.org>
+
+Many more people are probably owed thanks for ideas. Yet
 another doc nit to fix.
 
 =head1 COPYRIGHT
