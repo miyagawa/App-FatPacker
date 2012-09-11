@@ -229,6 +229,8 @@ sub script_command_file {
   print join "\n", $start, @segments, $end;
 }
 
+=encoding UTF-8
+
 =head1 NAME
 
 App::FatPacker - pack your dependencies onto your script file
