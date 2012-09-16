@@ -1,15 +1,18 @@
 use strict;
 use warnings FATAL => 'all';
-use inc::Module::Install 0.93;
+use ExtUtils::MakeMaker;
 
-all_from('lib/App/FatPacker.pm');
+(do 'maint/Makefile.PL.include' or die $@) unless -f 'META.yml';
 
-install_script('bin/fatpack');
+WriteMakefile(
+  NAME => 'App::FatPacker',
+  VERSION_FROM => 'lib/App/FatPacker.pm',
 
-resources(
-    # r/w: p5sagit@git.shadowcat.co.uk:App-FatPacker.git
-    repository => "git://git.shadowcat.co.uk/p5sagit/App-FatPacker.git",
-    homepage => 'http://git.shadowcat.co.uk/gitweb/gitweb.cgi?p=p5sagit/App-FatPacker.git',
+  META_ADD => {
+    resources => {
+      # r/w: p5sagit@git.shadowcat.co.uk:App-FatPacker.git
+      repository => "git://git.shadowcat.co.uk/p5sagit/App-FatPacker.git",
+      homepage => 'http://git.shadowcat.co.uk/gitweb/gitweb.cgi?p=p5sagit/App-FatPacker.git',
+    },
+  },
 );
-
-WriteAll;
