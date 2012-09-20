@@ -1,3 +1,5 @@
+Revision history for App-FatPacker
+
   - enable temp file deletion in pack.t on Win32
   - RT #79489: %fatpacked keys need to be unix paths
 
