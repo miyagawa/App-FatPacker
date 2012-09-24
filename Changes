@@ -1,5 +1,8 @@
 Revision history for App-FatPacker
 
+  - RT #79835: install bin/fatpack (lost in 0.009009 in the
+    Module::Install -> Distar conversion)
+
 0.009010 - 2012-09-19
   - enable temp file deletion in pack.t on Win32
   - RT #79489: %fatpacked keys need to be unix paths

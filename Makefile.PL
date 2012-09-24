@@ -8,6 +8,10 @@ WriteMakefile(
   NAME => 'App::FatPacker',
   VERSION_FROM => 'lib/App/FatPacker.pm',
 
+  EXE_FILES => [
+    'bin/fatpack',
+  ],
+
   META_ADD => {
     resources => {
       # r/w: p5sagit@git.shadowcat.co.uk:App-FatPacker.git
