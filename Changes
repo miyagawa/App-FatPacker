@@ -1,5 +1,7 @@
 Revision history for App-FatPacker
 
+  - bumping minimum perl to 5.8.0 until RT#57811 is sorted out
+
 0.009011 - 2012-09-24
   - RT #79835: install bin/fatpack (lost in 0.009009 in the
     Module::Install -> Distar conversion)
