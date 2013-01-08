@@ -210,6 +210,14 @@ sub script_command_file {
 
     unshift @INC, sub {
       if (my $fat = $fatpacked{$_[1]}) {
+        if ($] < 5.008) {
+          return sub {
+            return 0 unless length $fat;
+            $text =~ s/^([^\n]*\n?)//;
+            $_ = $1;
+            return 1;
+          };
+        }
         open my $fh, '<', \$fat
           or die "FatPacker error loading $_[1] (could be a perl installation issue?)";
         return $fh;
