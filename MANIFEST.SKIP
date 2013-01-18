@@ -1,1 +1,1 @@
-^(?!bin/\w+|examples/[^\.]+|lib/[\/\w]+\.p(m|od)|inc/|t/\w+\.t|t/.+\.pm$|Makefile.PL$|README$|MANIFEST$|Changes$|META.yml$)
+^(?!lib/.*\.pm$|t/.*\.t$|t/lib/.*\.pm$|xt/.*\.t$|xt/lib/.*\.pm$|(?^:[^/]*\.PL)$|(?^:Changes|MANIFEST|README|META\.yml)$|maint/(?^:[^.].*)$|bin/(?^:.*)$|t/mod/(?^:.*)$)
