@@ -213,7 +213,7 @@ sub script_command_file {
         if ($] < 5.008) {
           return sub {
             return 0 unless length $fat;
-            $text =~ s/^([^\n]*\n?)//;
+            $fat =~ s/^([^\n]*\n?)//;
             $_ = $1;
             return 1;
           };
