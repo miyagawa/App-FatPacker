@@ -2,6 +2,7 @@ package App::FatPacker;
 
 use strict;
 use warnings FATAL => 'all';
+use 5.008001;
 use Getopt::Long;
 use Cwd qw(cwd);
 use File::Find qw(find);
