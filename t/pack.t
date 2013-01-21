@@ -6,6 +6,7 @@ use File::Basename;
 use File::Copy;
 use File::Path;
 use File::Temp qw/tempdir/;
+use File::Spec;
 use Cwd;
 
 BEGIN { use_ok "App::FatPacker", "" }
@@ -29,15 +30,23 @@ print "1;\n";
 select STDOUT;
 close $temp_fh;
 
+# make sure we don't pick up things from our created dir
+chdir File::Spec->tmpdir;
+
 # Packed, now try using it:
 require $temp_fh;
 
 {
   require t::mod::a;
   no warnings 'once';
-  ok $t::mod::a::foo eq 'bar';
+  ok $t::mod::a::foo eq 'bar', "packed script works";
 }
 
-# moving away from the dir so it could be deleted
-chdir $cwd;
+if (my $testwith = $ENV{'FATPACKER_TESTWITH'}) {
+  for my $perl (split ' ', $testwith) {
+    my $out = system $perl, '-e',
+        q{alarm 5; require $ARGV[0]; require t::mod::a; exit($t::mod::a::foo eq 'bar' ? 0 : 1)}, $temp_fh;
+    ok !$out, "packed script works with $perl";
+  }
+}
 
