@@ -1,5 +1,7 @@
 Revision history for App-FatPacker
 
+  - fix to support for < 5.8 perls (haarg)
+
 0.009012 - 2013-01-18
   - support for < 5.8 perls (RT#57811, haarg)
 

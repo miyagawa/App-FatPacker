@@ -14,7 +14,7 @@ use File::Copy qw(copy);
 use File::Path qw(mkpath rmtree);
 use B qw(perlstring);
 
-our $VERSION = '0.009012'; # 0.9.012
+our $VERSION = '0.009013'; # 0.9.013
 
 $VERSION = eval $VERSION;
 
