@@ -19,7 +19,7 @@ WriteMakefile(
       homepage => 'http://git.shadowcat.co.uk/gitweb/gitweb.cgi?p=p5sagit/App-FatPacker.git',
     },
     requires => {
-        perl => 5.8.0,
+        perl => '5.008000',
     },
   },
 );
