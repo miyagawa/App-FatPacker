@@ -248,7 +248,7 @@ App::FatPacker - pack your dependencies onto your script file
   $ fatpack trace myscript.pl
   $ fatpack packlists-for `cat fatpacker.trace` >packlists
   $ fatpack tree `cat packlists`
-  $ (fatpack file; cat myscript.pl) >myscript.packed.pl
+  $ (head -n1 myscript.pl |grep '^#!'; fatpack file; cat myscript.pl) >myscript.packed.pl
 
 See the documentation for the L<fatpack> script itself for more information.
 
