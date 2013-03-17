@@ -67,6 +67,9 @@ Current basic recipe for packing:
   $ fatpack tree `cat packlists`
   $ (head -n1 myscript.pl |grep '^#!'; fatpack file; cat myscript.pl) >myscript.packed.pl
 
+The C<head -n1 myscript.pl |grep '^#!'> code pulls out the Unix shebang
+line, if there is one, and injects it at the start of the packed script.
+
 =head1 COPYRIGHT, LICENSE, AUTHOR
 
 See the corresponding sections in L<App::FatPacker>.
